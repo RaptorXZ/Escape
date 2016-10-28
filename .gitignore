@@ -1,0 +1,16 @@
+##########################
+# Unreal Generated Files #
+##########################
+Build/
+Binaries/
+Content/StarterContent/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+######################
+# VS Generated Files #
+######################
+*.VC.opendb
+*.sdf
+
