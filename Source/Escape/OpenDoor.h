@@ -27,17 +27,41 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
+	// Max rotation we want the door to open up to
+	UPROPERTY(EditAnywhere, Category = "Timeline")
+	float OpenDegree = -90.0f;
+
+	// The Curve used to lerp the door between open and closed
+	UPROPERTY(EditAnywhere, Category = "Timeline")
+	UCurveFloat* CurveFloat;
+
+	// Bool that tells us if the door is open or closed. Editable in editor
+	// so that doors can start as being either opened or closed initially
+	UPROPERTY(EditAnywhere)
+	bool Open = false;
+
 private:
-	UPROPERTY(VisibleAnywhere)
-	float OpenAngle = 120.0f;
+	// Door's starting rotation
+	FRotator ActorInitialRotation;
 
-	UPROPERTY(VisibleAnywhere)
-	float ClosedAngle = 180.0f;
+	// Door's open rotation
+	FRotator TargetRotation;
 
+	// Timeline using the Curve
+	FTimeline NewTimeline;
+
+	// Function handling the door's rotation progress
+	UFUNCTION()
+	void HandleProgress(float Value);
+
+	// The Trigger Volume causing the door to open
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
 
+	// The Actor able to open the door with the Trigger Volume
 	UPROPERTY(VisibleAnywhere)
 	AActor* ActorThatOpens; //Pawn inherits from actor
-	
+
+	// The door
+	AActor* Owner = GetOwner();
 };
