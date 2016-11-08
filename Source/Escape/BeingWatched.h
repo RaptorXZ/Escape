@@ -24,13 +24,13 @@ public:
 private:
 
 	UPROPERTY(VisibleAnywhere)
-	AActor* ActorThatSees; //Pawn inherits from actor
+	AActor* ActorThatSees = nullptr; //Pawn inherits from actor
 
 	UPROPERTY(VisibleAnywhere)
 	AActor* Owner = GetOwner();
 
 	UPROPERTY(EditAnywhere)
-	UMaterial* NewMat;
+	UMaterial* NewMat = nullptr;
 
 	//Player's viewpoint
 	UPROPERTY(VisibleAnywhere)

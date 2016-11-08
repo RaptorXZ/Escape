@@ -33,7 +33,7 @@ public:
 
 	// The Curve used to lerp the door between open and closed
 	UPROPERTY(EditAnywhere, Category = "Timeline")
-	UCurveFloat* CurveFloat;
+	UCurveFloat* CurveFloat = nullptr;
 
 	// Bool that tells us if the door is open or closed. Editable in editor
 	// so that doors can start as being either opened or closed initially
@@ -56,11 +56,10 @@ private:
 
 	// The Trigger Volume causing the door to open
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	ATriggerVolume* PressurePlate = nullptr;
 
 	// The Actor able to open the door with the Trigger Volume
-	UPROPERTY(VisibleAnywhere)
-	AActor* ActorThatOpens; //Pawn inherits from actor
+	AActor* ActorThatOpens = nullptr; //Pawn inherits from actor
 
 	// The door
 	AActor* Owner = GetOwner();
