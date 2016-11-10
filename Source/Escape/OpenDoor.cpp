@@ -3,14 +3,12 @@
 #include "Escape.h"
 #include "OpenDoor.h"
 
-
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 }
-
 
 // Called when the game starts
 void UOpenDoor::BeginPlay()
@@ -37,6 +35,7 @@ void UOpenDoor::HandleProgress(float Value)
 	FRotator NewRotation = FMath::Lerp(ActorInitialRotation, TargetRotation, Value);
 	//Rotate the door
 	Owner->SetActorRotation(NewRotation);
+	UE_LOG(LogTemp, Warning, TEXT("Handling rotation of door"));
 }
 
 // Called when door opens
@@ -55,6 +54,10 @@ void UOpenDoor::OpenDoor()
 
 		//Play timeline to open the door
 		NewTimeline.Play();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s missing Curve Float"), *GetOwner()->GetName());
 	}
 }
 
