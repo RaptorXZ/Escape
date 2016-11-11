@@ -17,8 +17,18 @@ void UReact::BeginPlay()
 
 	//Get the door's starting rotation and set it as the Initial Rotation and Target Rotation
 	ActorInitialRotation = TargetRotation = Owner->GetActorRotation();
-	//Add the value we want the door to open to
-	TargetRotation.Yaw += Rotation;
+	//Add the values we want the object to rotate to
+	TargetRotation.Yaw += YawRotation;
+	TargetRotation.Pitch += PitchRotation;
+	TargetRotation.Roll += RollRotation;
+
+	/// Iterate through the object's components to get its Static Mesh
+	TArray<UStaticMeshComponent*> Components;
+	Owner->GetComponents<UStaticMeshComponent>(Components);
+	for (int32 i = 0; i < Components.Num(); i++)
+	{
+		MeshComp = Cast<UStaticMeshComponent>(Components[i]);
+	}
 }
 
 void UReact::HandleProgress(float Value)
@@ -27,16 +37,15 @@ void UReact::HandleProgress(float Value)
 	FRotator NewRotation = FMath::Lerp(ActorInitialRotation, TargetRotation, Value);
 	//Rotate the object
 	Owner->SetActorRotation(NewRotation);
-	UE_LOG(LogTemp, Warning, TEXT("Handling rotation progress"));
 }
 
 void UReact::UReaction()
 {
 	/* If any text has been entered into MyNote string it will be displayed,
 		otherwise nothing will show */
-	if (MyNote != "")
+	if (Text != "")
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *MyNote);
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *Text);
 	}
 
 	/* If set, the object will be rotated when interacted with */
@@ -75,7 +84,6 @@ void UReact::Rotate()
 
 		//Play timeline to rotate the object
 		NewTimeline.Play();
-		UE_LOG(LogTemp, Warning, TEXT("%s is rotating to %s"), *Owner->GetName(), *Owner->GetActorRotation().ToString());
 	}
 	else
 	{
@@ -98,11 +106,19 @@ void UReact::RotateBack()
 
 		//Play timeline in reverse to rotate the object back
 		NewTimeline.Reverse();
-		UE_LOG(LogTemp, Warning, TEXT("%s is rotating back to %s"), *Owner->GetName(), *Owner->GetActorRotation().ToString());
 	}
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s missing Curve Float"), *Owner->GetName());
+	}
+}
+
+void UReact::CreateOutline()
+{
+	if (MeshComp != nullptr)
+	{
+		MeshComp->SetRenderCustomDepth(true);
+		MeshComp->CustomDepthStencilValue = STENCIL_ITEM_HIGHLIGHT;
 	}
 }
 

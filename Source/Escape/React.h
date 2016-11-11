@@ -35,30 +35,50 @@ public:
 	UFUNCTION()
 	void HandleProgress(float Value);
 
+	/// Creates an outline around the object when it's looked at to highlight it
+	UFUNCTION()
+	void CreateOutline();
+
 	UPROPERTY()
 	AActor* Owner = GetOwner();
+
+	UPROPERTY()
+	UStaticMeshComponent* MeshComp = nullptr;
+
+	// If true, this object will be highlighted when looked at within interactable
+	// reach by the player
+	UPROPERTY(EditAnywhere, Category = "Highlight")
+	bool bShouldHighlight = false;
 
 private:
 	// Text displayed when this object is interacted with.
 	// If left blank, no text will be displayed.
-	UPROPERTY(EditAnywhere, Category = "Reaction: Text", meta = (MultiLine))
-	FString MyNote = "";
+	UPROPERTY(EditAnywhere, Category = "Text", meta = (MultiLine))
+	FString Text = "";
 
 	// If true, this object will rotate when interacted with
-	UPROPERTY(EditAnywhere, Category = "Reaction: Rotation")
+	UPROPERTY(EditAnywhere, Category = "Rotation")
 	bool bShouldRotate = false;
 
 	// If true, this object can be rotated back to its original rotation
 	// if interacted with again
-	UPROPERTY(EditAnywhere, Category = "Reaction: Rotation", meta = (EditCondition = bShouldRotate))
+	UPROPERTY(EditAnywhere, Category = "Rotation", meta = (EditCondition = bShouldRotate))
 	bool bCanRotateBack = false;
 
-	// Amount by which this object will rotate when interacted with
-	UPROPERTY(EditAnywhere, Category = "Reaction: Rotation", meta = (EditCondition = bShouldRotate))
-	float Rotation;
+	// Amount by which this object will rotate by Yaw when interacted with
+	UPROPERTY(EditAnywhere, Category = "Rotation", meta = (EditCondition = bShouldRotate))
+	float YawRotation;
+
+	// Amount by which this object will rotate by Pitch when interacted with
+	UPROPERTY(EditAnywhere, Category = "Rotation", meta = (EditCondition = bShouldRotate))
+	float PitchRotation;
+
+	// Amount by which this object will rotate by Roll when interacted with
+	UPROPERTY(EditAnywhere, Category = "Rotation", meta = (EditCondition = bShouldRotate))
+	float RollRotation;
 
 	// Curve used to lerp the object between rotations
-	UPROPERTY(EditAnywhere, Category = "Reaction: Rotation", meta = (EditCondition = bShouldRotate))
+	UPROPERTY(EditAnywhere, Category = "Rotation", meta = (EditCondition = bShouldRotate))
 	UCurveFloat* CurveFloat = nullptr;
 
 	// Checks whether to rotate the object forth or in reverse

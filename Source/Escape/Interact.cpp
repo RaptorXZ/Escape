@@ -9,7 +9,7 @@
 UInteract::UInteract()
 {
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
 // Called when the game starts
@@ -37,24 +37,18 @@ void UInteract::Interact()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Interact pressed"));
 
-	//Line trace and see if we reach any actors set to Interactable
-	FHitResult HitResult = GetFirstInteractableInReach();
-	AActor* ActorHit = HitResult.GetActor();
+	////Line trace and see if we reach any actors set to Interactable
+	//FHitResult HitResult = GetFirstInteractableInReach();
+	//AActor* ActorHit = HitResult.GetActor();
 
-	if (ActorHit)
+	if (ActorHit != nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Line trace hit: %s"), *(ActorHit->GetName()));
 
-		auto* MyVar = GetReactComponent(ActorHit);
-
-		if (MyVar == nullptr)
+		if (ReactComp != nullptr)
 		{
-			return;
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Actor Component found: %s"), *(MyVar->GetName()));
-			MyVar->UReaction();
+			UE_LOG(LogTemp, Warning, TEXT("Actor Component found: %s"), *(ReactComp->GetName()));
+			ReactComp->UReaction();
 		}
 	}
 }
@@ -117,4 +111,21 @@ FVector UInteract::GetReachLineStart()
 		OUT PlayerViewPointRotation);
 
 	return PlayerViewPointLocation;
+}
+
+// Called every frame
+void UInteract::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//Line trace and see if we reach any actors set to Interactable
+	FHitResult HitResult = GetFirstInteractableInReach();
+	ActorHit = HitResult.GetActor();
+
+	if (ActorHit != nullptr)
+		ReactComp = GetReactComponent(ActorHit);
+
+	if (ReactComp != nullptr)
+		if (ReactComp->bShouldHighlight == true)
+			ReactComp->CreateOutline();
 }

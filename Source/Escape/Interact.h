@@ -20,6 +20,9 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	UClass* MyClass = UReact::StaticClass();
 	TSubclassOf<UReact> ReactClass = MyClass;
 
@@ -47,4 +50,8 @@ private:
 
 	// Returns current end of reach line
 	FVector GetReachLineEnd();
+
+	AActor* ActorHit = nullptr;
+
+	UReact* ReactComp = nullptr;
 };

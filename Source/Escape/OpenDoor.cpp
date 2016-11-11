@@ -35,7 +35,6 @@ void UOpenDoor::HandleProgress(float Value)
 	FRotator NewRotation = FMath::Lerp(ActorInitialRotation, TargetRotation, Value);
 	//Rotate the door
 	Owner->SetActorRotation(NewRotation);
-	UE_LOG(LogTemp, Warning, TEXT("Handling rotation of door"));
 }
 
 // Called when door opens
