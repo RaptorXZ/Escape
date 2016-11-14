@@ -63,4 +63,7 @@ private:
 
 	// The door
 	AActor* Owner = GetOwner();
+
+	UPROPERTY()
+	UAudioComponent* AudioComp = nullptr;
 };

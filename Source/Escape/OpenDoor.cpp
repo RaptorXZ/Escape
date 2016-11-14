@@ -26,6 +26,14 @@ void UOpenDoor::BeginPlay()
 	ActorInitialRotation = TargetRotation = Owner->GetActorRotation();
 	//Add the value we want the door to open to
 	TargetRotation.Yaw += OpenDegree;
+
+	/// Iterate through the object's components to get its Audio component
+	TArray<UAudioComponent*> Components;
+	Owner->GetComponents<UAudioComponent>(Components);
+	for (int32 i = 0; i < Components.Num(); i++)
+	{
+		AudioComp = Cast<UAudioComponent>(Components[i]);
+	}
 }
 
 // This function handles the actual rotation of the door
@@ -53,6 +61,11 @@ void UOpenDoor::OpenDoor()
 
 		//Play timeline to open the door
 		NewTimeline.Play();
+
+		if (AudioComp != nullptr)
+		{
+			AudioComp->Play();
+		}
 	}
 	else
 	{
@@ -76,6 +89,11 @@ void UOpenDoor::CloseDoor()
 
 		//Play timeline in reverse to shut the door
 		NewTimeline.Reverse();
+
+		if (AudioComp != nullptr)
+		{
+			AudioComp->Play();
+		}
 	}
 	else
 	{
