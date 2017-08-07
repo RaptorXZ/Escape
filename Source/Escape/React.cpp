@@ -1,19 +1,26 @@
 // Copyright Patrik Jarnesand 2016
 
-#include "Escape.h"
 #include "React.h"
+#include "Kismet/KismetSystemLibrary.h"
+
 
 // Sets default values for this component's properties
 UReact::UReact()
 {
-	bWantsBeginPlay = true;
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+
+	// ...
 }
+
 
 // Called when the game starts
 void UReact::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UKismetSystemLibrary::ExecuteConsoleCommand(GetWorld(), FString("r.CustomDepth 3"));
 
 	//Get the door's starting rotation and set it as the Initial Rotation and Target Rotation
 	ActorInitialRotation = TargetRotation = Owner->GetActorRotation();
@@ -31,6 +38,15 @@ void UReact::BeginPlay()
 	}
 }
 
+// Called every frame
+void UReact::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//Tick the timeline every frame
+	NewTimeline.TickTimeline(DeltaTime);
+}
+
 void UReact::HandleProgress(float Value)
 {
 	//Create a lerp between the object's initial rotation and the target rotation
@@ -42,7 +58,7 @@ void UReact::HandleProgress(float Value)
 void UReact::UReaction()
 {
 	/* If any text has been entered into MyNote string it will be displayed,
-		otherwise nothing will show */
+	otherwise nothing will show */
 	if (Text != "")
 	{
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Text);
@@ -118,15 +134,6 @@ void UReact::CreateOutline()
 	if (MeshComp != nullptr)
 	{
 		MeshComp->SetRenderCustomDepth(true);
-		MeshComp->CustomDepthStencilValue = STENCIL_ITEM_HIGHLIGHT;
+		//MeshComp->CustomDepthStencilValue = STENCIL_ITEM_HIGHLIGHT;
 	}
-}
-
-// Called every frame
-void UReact::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	//Tick the timeline every frame
-	NewTimeline.TickTimeline(DeltaTime);
 }

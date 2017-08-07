@@ -1,6 +1,5 @@
 // Copyright Patrik Jarnesand 2016
 
-#include "Escape.h"
 #include "Interact.h"
 
 #define OUT
@@ -8,15 +7,38 @@
 // Sets default values for this component's properties
 UInteract::UInteract()
 {
-	bWantsBeginPlay = true;
+	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+
+	// ...
 }
+
 
 // Called when the game starts
 void UInteract::BeginPlay()
 {
 	Super::BeginPlay();
-	FindInputComponent();
+
+	FindInputComponent(); // Check validity
+}
+
+
+// Called every frame
+void UInteract::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//Line trace and see if we reach any actors set to Interactable
+	FHitResult HitResult = GetFirstInteractableInReach();
+	ActorHit = HitResult.GetActor();
+
+	if (ActorHit != nullptr)
+		ReactComp = GetReactComponent(ActorHit);
+
+	if (ReactComp != nullptr)
+		if (ReactComp->bShouldHighlight == true)
+			ReactComp->CreateOutline();
 }
 
 /// Look for attached Input Component (only appears at run-time)
@@ -80,12 +102,12 @@ const FHitResult UInteract::GetFirstInteractableInReach()
 	/// Linetrace (ray-cast)
 	FHitResult HitResult;
 	GetWorld()->LineTraceSingleByObjectType
-		(OUT HitResult,
-		 GetReachLineStart(),
-		 GetReachLineEnd(),
-		 FCollisionObjectQueryParams(ECollisionChannel::ECC_GameTraceChannel1), //GameTraceChannel1 = Interactable
-		 TraceParams);
-	
+	(OUT HitResult,
+		GetReachLineStart(),
+		GetReachLineEnd(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_GameTraceChannel1), //GameTraceChannel1 = Interactable
+		TraceParams);
+
 	return HitResult;
 }
 
@@ -95,8 +117,8 @@ FVector UInteract::GetReachLineEnd()
 	FRotator PlayerViewPointRotation;
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-			OUT PlayerViewPointLocation,
-			OUT PlayerViewPointRotation);
+		OUT PlayerViewPointLocation,
+		OUT PlayerViewPointRotation);
 
 	return PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
 }
@@ -111,21 +133,4 @@ FVector UInteract::GetReachLineStart()
 		OUT PlayerViewPointRotation);
 
 	return PlayerViewPointLocation;
-}
-
-// Called every frame
-void UInteract::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	//Line trace and see if we reach any actors set to Interactable
-	FHitResult HitResult = GetFirstInteractableInReach();
-	ActorHit = HitResult.GetActor();
-
-	if (ActorHit != nullptr)
-		ReactComp = GetReactComponent(ActorHit);
-
-	if (ReactComp != nullptr)
-		if (ReactComp->bShouldHighlight == true)
-			ReactComp->CreateOutline();
 }

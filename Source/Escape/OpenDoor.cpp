@@ -1,6 +1,5 @@
 // Copyright Patrik Jarnesand 2016
 
-#include "Escape.h"
 #include "OpenDoor.h"
 
 // Sets default values for this component's properties

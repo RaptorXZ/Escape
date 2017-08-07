@@ -3,6 +3,8 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
+#include "Curves/CurveFloat.h"
+#include "Components/TimelineComponent.h"
 #include "OpenDoor.generated.h"
 
 

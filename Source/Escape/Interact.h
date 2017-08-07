@@ -2,7 +2,9 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
 #include "React.h"
+#include "GameFramework/Actor.h"
 #include "Components/ActorComponent.h"
 #include "Interact.generated.h"
 
@@ -17,9 +19,6 @@ public:
 	// Sets default values for this component's properties
 	UInteract();
 
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -28,6 +27,10 @@ public:
 
 	// Returns the React script on the hit actor
 	UReact* GetReactComponent(class AActor* ActorValue);
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
 private:
 	// How far the player can interact with objects (in cm)
@@ -53,5 +56,6 @@ private:
 
 	AActor* ActorHit = nullptr;
 
-	UReact* ReactComp = nullptr;
+	UReact* ReactComp = nullptr;		
+	
 };

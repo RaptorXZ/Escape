@@ -2,7 +2,11 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
+#include "Curves/CurveFloat.h"
+#include "Components/TimelineComponent.h"
 #include "Components/ActorComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "React.generated.h"
 
 
@@ -15,17 +19,14 @@ public:
 	// Sets default values for this component's properties
 	UReact();
 
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// Rotates the object
 	virtual void Rotate();
 
 	// Rotates the object back
 	virtual void RotateBack();
-
-	// Called every frame
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	// Function called when player interacts with this object
 	UFUNCTION()
@@ -49,6 +50,10 @@ public:
 	// reach by the player
 	UPROPERTY(EditAnywhere, Category = "Highlight")
 	bool bShouldHighlight = false;
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
 private:
 	// Text displayed when this object is interacted with.
@@ -92,4 +97,5 @@ private:
 
 	// Timeline using the CurveFloat
 	FTimeline NewTimeline;
+	
 };
