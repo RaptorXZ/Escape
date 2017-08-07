@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Escape.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{0592EA76-FE6E-4ABD-980A-F43464E4FBCD}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Escape.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\EscapeEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{7F1A47F2-198D-4073-BCF5-792DE662D689}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Escape">
+      <UniqueIdentifier>{D675DF5C-7597-4234-A16F-0FC47E0A819B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Escape\Escape.Build.cs">
+      <Filter>Source\Escape</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source\Escape\Public">
+      <UniqueIdentifier>{75c0ceac-bad2-4de8-b028-351ac6782d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Escape\Private">
+      <UniqueIdentifier>{6b2f1a15-787a-4000-a43d-35588bc5a8ab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\Escape\Interact.h">
+      <Filter>Source\Escape\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Escape\React.h">
+      <Filter>Source\Escape\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Escape\Escape.h">
+      <Filter>Source\Escape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Escape\EscapeGameMode.h">
+      <Filter>Source\Escape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Escape\BeingWatched.h">
+      <Filter>Source\Escape\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Escape\OpenDoor.h">
+      <Filter>Source\Escape\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Escape\PositionReport.h">
+      <Filter>Source\Escape\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\Escape\Interact.cpp">
+      <Filter>Source\Escape\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Escape\React.cpp">
+      <Filter>Source\Escape\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Escape\Escape.cpp">
+      <Filter>Source\Escape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Escape\EscapeGameMode.cpp">
+      <Filter>Source\Escape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Escape\BeingWatched.cpp">
+      <Filter>Source\Escape\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Escape\OpenDoor.cpp">
+      <Filter>Source\Escape\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Escape\PositionReport.cpp">
+      <Filter>Source\Escape\Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
